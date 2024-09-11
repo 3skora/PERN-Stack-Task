@@ -2,5 +2,6 @@ import * as app from "./app";
 
 app.testDatabase();
 app.initializeMiddlewares();
-// app.syncDatabase();
+// app.seedDatabase();
+app.syncDatabase();
 app.listen();

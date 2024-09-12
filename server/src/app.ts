@@ -2,6 +2,7 @@ import express from "express";
 import { port } from "./config";
 import sequelize from "./config/database";
 import User from "./models/user.model";
+import { TRoute } from "./routes";
 
 export const app = express();
 
@@ -40,6 +41,12 @@ export const syncDatabase = async () => {
 export const initializeMiddlewares = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+};
+
+export const initializeRoutes = (routes: TRoute[]) => {
+  routes.forEach((route) => {
+    app.use("/api", route.router);
+  });
 };
 
 export const listen = () => {

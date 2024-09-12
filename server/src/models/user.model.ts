@@ -1,17 +1,18 @@
-import { Model, DataTypes, Sequelize } from "sequelize";
+import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
-import { UserAttributes, UserCreationAttributes } from "@/interfaces/user.interfaces";
+import { UserAttributes, UserCreationAttributes } from "../interfaces/user.interfaces";
 
 // class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-class User extends Model {
-  public id: number;
-  public name: string;
-  public phoneNumber: string;
-  public city: string;
-  public email: string;
+// class User extends Model {
+class User extends Model<UserAttributes, UserCreationAttributes> {
+  declare id: number;
+  declare name: string;
+  declare phoneNumber: string;
+  declare city: string;
+  declare email: string;
 
-  public readonly createdAt: Date;
-  public readonly updatedAt: Date;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 User.init(
@@ -37,11 +38,14 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+      validate: {
+        isEmail: true,
+      },
     },
   },
   {
     sequelize,
-    tableName: "users",
+    // tableName: "users",
     timestamps: true,
   }
 );

@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { port } from "./config";
 import sequelize from "./config/database";
 import User from "./models/user.model";
@@ -39,6 +40,7 @@ export const syncDatabase = async () => {
 };
 
 export const initializeMiddlewares = () => {
+  app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 };

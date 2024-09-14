@@ -8,7 +8,7 @@ import { TextField, Typography } from "@mui/material";
 import React from "react";
 import { IUser } from "../../interfaces/user.interfaces";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setOpenForm, setUserInputKey } from "../../store/formSlice";
+import { setOpenForm, setUserInputKey, setUserInputs, userInputsInitialState } from "../../store/formSlice";
 
 interface UserFormModalProps {
   handleSave: () => void;
@@ -18,9 +18,11 @@ interface UserFormModalProps {
 const UserFormModal: React.FC<UserFormModalProps> = ({ handleSave, isSaving }) => {
   const dispatch = useAppDispatch();
   const { openForm, formType, userInputs } = useAppSelector((state) => state.form);
+  console.log("🚀 ~ file: UserFormModal.tsx:21 ~ userInputs:", userInputs);
 
   const onClose = () => {
     dispatch(setOpenForm(false));
+    dispatch(setUserInputs(userInputsInitialState));
   };
 
   const handleOnChange = (key: keyof IUser, newValue: any) => {

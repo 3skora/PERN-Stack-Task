@@ -2,6 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IUser } from "../interfaces/user.interfaces";
 import { set } from "lodash";
 
+export const userInputsInitialState: IUser = {
+  name: "",
+  phoneNumber: "",
+  city: "",
+  email: "",
+};
 export interface formState {
   openForm: boolean;
   formType: "Add" | "Edit";
@@ -11,12 +17,7 @@ export interface formState {
 const initialState: formState = {
   openForm: false,
   formType: "Add",
-  userInputs: {
-    name: "",
-    phoneNumber: "",
-    city: "",
-    email: "",
-  },
+  userInputs: userInputsInitialState,
 };
 
 const formSlice = createSlice({

@@ -11,6 +11,7 @@ export const userInputsInitialState: IUser = {
 export interface formState {
   openForm: boolean;
   formType: "Add" | "Edit";
+  formEntity: "User";
   userInputs: IUser;
   selectedUserId: number | undefined;
 }
@@ -18,6 +19,7 @@ export interface formState {
 const initialState: formState = {
   openForm: false,
   formType: "Add",
+  formEntity: "User",
   userInputs: userInputsInitialState,
   selectedUserId: undefined,
 };
@@ -32,6 +34,9 @@ const formSlice = createSlice({
     setFormType(state, action: PayloadAction<formState["formType"]>) {
       state.formType = action.payload;
     },
+    setFormEntity(state, action: PayloadAction<formState["formEntity"]>) {
+      state.formEntity = action.payload;
+    },
     setUserInputs(state, action: PayloadAction<IUser>) {
       state.userInputs = action.payload;
     },
@@ -44,5 +49,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { setOpenForm, setFormType, setUserInputs, setUserInputKey, setSelectedUserId } = formSlice.actions;
+export const { setOpenForm, setFormType, setFormEntity, setUserInputs, setUserInputKey, setSelectedUserId } =
+  formSlice.actions;
 export default formSlice.reducer;

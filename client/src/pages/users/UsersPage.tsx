@@ -2,7 +2,7 @@ import UsersGrid from "../../features/users/UsersGrid";
 import ConfirmDeletionModal from "../../components/modals/ConfirmDeletionModal";
 import UserFormModal from "../../features/users/UserFormModal";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setFormType, setOpenForm } from "../../store/formSlice";
+import { setFormEntity, setFormType, setOpenForm } from "../../store/formSlice";
 import { setOpenModal } from "../../store/modalSlice";
 import { Button } from "@mui/material";
 import { useDeleteUserMutation } from "../../api/userApi";
@@ -16,6 +16,7 @@ const UsersPage = () => {
     console.log("create new user");
     dispatch(setOpenForm(true));
     dispatch(setFormType("Add"));
+    dispatch(setFormEntity("User"));
   };
 
   const onConfirm = () => {
@@ -40,5 +41,4 @@ const UsersPage = () => {
     </div>
   );
 };
-
 export default UsersPage;

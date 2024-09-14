@@ -9,7 +9,7 @@ import { useGetUsersQuery } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { setOpenModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store";
-import { setFormType, setOpenForm, setSelectedUserId, setUserInputs } from "../../store/formSlice";
+import { setFormEntity, setFormType, setOpenForm, setSelectedUserId, setUserInputs } from "../../store/formSlice";
 import { mapUserRecordToUser } from "../../utils/user.utils";
 
 const UsersGrid = () => {
@@ -23,6 +23,7 @@ const UsersGrid = () => {
     dispatch(setOpenForm(true));
     dispatch(setSelectedUserId(user.id));
     dispatch(setFormType("Edit"));
+    dispatch(setFormEntity("User"));
     dispatch(setUserInputs(mappedUser));
   };
 

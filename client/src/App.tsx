@@ -1,12 +1,12 @@
-import UsersPage from "./pages/users/UsersPage";
-import "./App.css";
+import { BrowserRouter } from 'react-router-dom';
+import AllRoutes from './routes';
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <UsersPage />
-    </div>
+    <BrowserRouter>
+      <AllRoutes />
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

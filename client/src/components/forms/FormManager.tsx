@@ -6,7 +6,7 @@ type TFormsLookUp = {
   [key in formState["formEntity"]]: JSX.Element;
 };
 
-const formManager = () => {
+const FormManager = () => {
   const { formEntity } = useAppSelector((state) => state.form);
 
   const formsLookUp: TFormsLookUp = {
@@ -18,4 +18,4 @@ const formManager = () => {
   return <>{selectedForm}</>;
 };
 
-export default formManager;
+export default FormManager;

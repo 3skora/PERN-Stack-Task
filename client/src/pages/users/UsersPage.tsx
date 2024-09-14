@@ -2,28 +2,36 @@ import UsersGrid from "../../features/users/UsersGrid";
 import ConfirmDeletionModal from "../../components/modals/ConfirmDeletionModal";
 import UserFormModal from "../../features/users/UserFormModal";
 import { useAppDispatch } from "../../store";
-import { setOpenForm } from "../../store/formSlice";
+import { setFormType, setOpenForm } from "../../store/formSlice";
 import { setOpenModal } from "../../store/modalSlice";
-
+import { Button } from "@mui/material";
 const UsersPage = () => {
   const dispatch = useAppDispatch();
+
+  const onCreateNewUser = () => {
+    console.log("create new user");
+    dispatch(setOpenForm(true));
+    dispatch(setFormType("Add"));
+  };
 
   const onConfirm = () => {
     console.log("Confirm Delete");
     dispatch(setOpenModal(false));
   };
 
-  const onSave = () => {
-    console.log("Saved");
-    dispatch(setOpenForm(false));
-  };
-
   return (
     <div>
-      <h1>Users Management</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+        <h1 style={{ flexGrow: 1, textAlign: "center" }}>Users Management</h1>
+        <div>
+          <Button variant="contained" onClick={onCreateNewUser}>
+            Create New User
+          </Button>
+        </div>
+      </div>
       <UsersGrid />
       <ConfirmDeletionModal onConfirm={onConfirm} />
-      <UserFormModal handleSave={onSave} isSaving={false} />
+      <UserFormModal />
     </div>
   );
 };

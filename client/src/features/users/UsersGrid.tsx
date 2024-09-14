@@ -5,10 +5,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import { IUser, IUserRecord } from "../../interfaces/user.interfaces";
-import { useGetUsersQuery } from "../../api/userApi";
+import { useDeleteUserMutation, useGetUsersQuery } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
-import { setOpenModal } from "../../store/modalSlice";
-import { useAppDispatch } from "../../store";
+import { setOnConfirmDeletion, setOpenModal } from "../../store/modalSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { setFormEntity, setFormType, setOpenForm, setSelectedUserId, setUserInputs } from "../../store/formSlice";
 import { mapUserRecordToUser } from "../../utils/user.utils";
 
@@ -16,6 +16,15 @@ const UsersGrid = () => {
   const { data, isLoading } = useGetUsersQuery({});
 
   const dispatch = useAppDispatch();
+
+  const [deleteUser] = useDeleteUserMutation();
+  const { selectedUserId } = useAppSelector((state) => state.form);
+
+  const onConfirmDeletion = () => {
+    console.log("Confirm Delete");
+    selectedUserId && deleteUser(selectedUserId);
+    dispatch(setOpenModal(false));
+  };
 
   const handleOnEditUser = (user: IUserRecord) => {
     console.log("🚀 ~ file: UsersGrid.tsx:20 ~ handleOnEditUser ~ user:", user);
@@ -31,6 +40,7 @@ const UsersGrid = () => {
     console.log("🚀 ~ file: UsersGrid.tsx:25 ~ handleOnDeleteUser ~ user:", user);
     dispatch(setSelectedUserId(user.id));
     dispatch(setOpenModal(true));
+    dispatch(setOnConfirmDeletion(onConfirmDeletion));
   };
 
   const columns: GridColDef[] = [

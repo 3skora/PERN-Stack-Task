@@ -1,12 +1,16 @@
 import UsersGrid from "../../features/users/UsersGrid";
 import ConfirmDeletionModal from "../../components/modals/ConfirmDeletionModal";
 import UserFormModal from "../../features/users/UserFormModal";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { setFormType, setOpenForm } from "../../store/formSlice";
 import { setOpenModal } from "../../store/modalSlice";
 import { Button } from "@mui/material";
+import { useDeleteUserMutation } from "../../api/userApi";
 const UsersPage = () => {
   const dispatch = useAppDispatch();
+
+  const [deleteUser, { isLoading }] = useDeleteUserMutation();
+  const { selectedUserId } = useAppSelector((state) => state.form);
 
   const onCreateNewUser = () => {
     console.log("create new user");
@@ -16,6 +20,7 @@ const UsersPage = () => {
 
   const onConfirm = () => {
     console.log("Confirm Delete");
+    selectedUserId && deleteUser(selectedUserId);
     dispatch(setOpenModal(false));
   };
 

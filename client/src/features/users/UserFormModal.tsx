@@ -7,7 +7,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { TextField, Typography } from "@mui/material";
 import { IUser } from "../../interfaces/user.interfaces";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setOpenForm, setUserInputKey, setUserInputs, userInputsInitialState } from "../../store/formSlice";
+import {
+  setOpenForm,
+  setSelectedUserId,
+  setUserInputKey,
+  setUserInputs,
+  userInputsInitialState,
+} from "../../store/formSlice";
 import { useCreateUserMutation, useEditUserMutation } from "../../api/userApi";
 
 const UserFormModal = () => {
@@ -16,7 +22,8 @@ const UserFormModal = () => {
   const [createUser, { isLoading: isCreateLoading }] = useCreateUserMutation();
   const [editUser, { isLoading: isEditLoading }] = useEditUserMutation();
 
-  const { openForm, formType, userInputs } = useAppSelector((state) => state.form);
+  const { openForm, formType, userInputs, selectedUserId } = useAppSelector((state) => state.form);
+  console.log("🚀 ~ file: UserFormModal.tsx:20 ~ UserFormModal ~ selectedUserId:", selectedUserId);
   console.log("🚀 ~ file: UserFormModal.tsx:21 ~ userInputs:", userInputs);
 
   const isSaving = isCreateLoading || isEditLoading;
@@ -24,6 +31,7 @@ const UserFormModal = () => {
   const onClose = () => {
     dispatch(setOpenForm(false));
     dispatch(setUserInputs(userInputsInitialState));
+    dispatch(setSelectedUserId(undefined));
   };
   const onSave = () => {
     console.log("Save");
@@ -31,7 +39,7 @@ const UserFormModal = () => {
       createUser(userInputs);
     } else {
       console.log("Edit");
-      editUser({ id: 2, ...userInputs });
+      selectedUserId && editUser({ id: selectedUserId, ...userInputs });
     }
 
     onClose();

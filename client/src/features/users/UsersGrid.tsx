@@ -9,15 +9,10 @@ import { useGetUsersQuery } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { setOpenModal } from "../../store/modalSlice";
 import { useAppDispatch } from "../../store";
-import { setFormType, setOpenForm, setUserInputs } from "../../store/formSlice";
+import { setFormType, setOpenForm, setSelectedUserId, setUserInputs } from "../../store/formSlice";
 import { mapUserRecordToUser } from "../../utils/user.utils";
 
-interface UsersGridProps {
-  //   onEditUser: (user: IUserRecord, userId: number) => void;
-  //   handleShowDeleteDialog: (params: any) => void;
-}
-
-const UsersGrid: React.FC<UsersGridProps> = ({}) => {
+const UsersGrid = () => {
   const { data, isLoading } = useGetUsersQuery({});
 
   const dispatch = useAppDispatch();
@@ -26,21 +21,21 @@ const UsersGrid: React.FC<UsersGridProps> = ({}) => {
     console.log("🚀 ~ file: UsersGrid.tsx:20 ~ handleOnEditUser ~ user:", user);
     const mappedUser = mapUserRecordToUser(user);
     dispatch(setOpenForm(true));
+    dispatch(setSelectedUserId(user.id));
     dispatch(setFormType("Edit"));
     dispatch(setUserInputs(mappedUser));
-    // onEditUser(user, user.id);
   };
 
   const handleOnDeleteUser = (user: IUserRecord) => {
     console.log("🚀 ~ file: UsersGrid.tsx:25 ~ handleOnDeleteUser ~ user:", user);
+    dispatch(setSelectedUserId(user.id));
     dispatch(setOpenModal(true));
-    // onEditUser(user, user.id);
   };
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "name", headerName: "Name", width: 200 },
-    { field: "email", headerName: "Email", width: 200 },
+    { field: "email", headerName: "Email", width: 250 },
     { field: "phoneNumber", headerName: "Phone Number", width: 150 },
     { field: "city", headerName: "City", width: 200 },
     {

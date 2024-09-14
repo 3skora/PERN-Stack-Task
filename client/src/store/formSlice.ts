@@ -12,12 +12,14 @@ export interface formState {
   openForm: boolean;
   formType: "Add" | "Edit";
   userInputs: IUser;
+  selectedUserId: number | undefined;
 }
 
 const initialState: formState = {
   openForm: false,
   formType: "Add",
   userInputs: userInputsInitialState,
+  selectedUserId: undefined,
 };
 
 const formSlice = createSlice({
@@ -36,8 +38,11 @@ const formSlice = createSlice({
     setUserInputKey(state, action: PayloadAction<{ key: string; newValue: any }>) {
       state.userInputs = set(state.userInputs, action.payload.key, action.payload.newValue);
     },
+    setSelectedUserId(state, action: PayloadAction<number | undefined>) {
+      state.selectedUserId = action.payload;
+    },
   },
 });
 
-export const { setOpenForm, setFormType, setUserInputs, setUserInputKey } = formSlice.actions;
+export const { setOpenForm, setFormType, setUserInputs, setUserInputKey, setSelectedUserId } = formSlice.actions;
 export default formSlice.reducer;

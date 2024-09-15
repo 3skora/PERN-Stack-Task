@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../interfaces/user.interfaces";
+import { EUserRole, IUser } from "../interfaces/user.interfaces";
 import { set } from "lodash";
 
 export const userInputsInitialState: IUser = {
@@ -7,6 +7,7 @@ export const userInputsInitialState: IUser = {
   phoneNumber: "",
   city: "",
   email: "",
+  role: EUserRole.HELPER,
 };
 export interface formState {
   openForm: boolean;

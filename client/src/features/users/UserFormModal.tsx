@@ -4,8 +4,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import { TextField, Typography } from "@mui/material";
-import { IUser } from "../../interfaces/user.interfaces";
+import { FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { EUserRole, IUser } from "../../interfaces/user.interfaces";
 import { useAppDispatch, useAppSelector } from "../../store";
 import {
   setOpenForm,
@@ -96,6 +96,22 @@ const UserFormModal = () => {
           value={userInputs.city}
           onChange={(e) => handleOnChange(`city`, e.target.value)}
         />
+
+        <FormControl fullWidth>
+          <InputLabel id="role">role</InputLabel>
+          <Select
+            labelId="role"
+            value={userInputs.role}
+            label="role"
+            onChange={(e) => handleOnChange(`role`, e.target.value)}
+          >
+            {Object.entries(EUserRole).map(([key, value]) => (
+              <MenuItem key={key} value={value}>
+                <span style={{ textTransform: "capitalize" }}>{value}</span>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </DialogContent>
       <DialogActions>
         <Button variant="contained" color="error" onClick={onClose}>
@@ -108,5 +124,4 @@ const UserFormModal = () => {
     </Dialog>
   );
 };
-
 export default UserFormModal;

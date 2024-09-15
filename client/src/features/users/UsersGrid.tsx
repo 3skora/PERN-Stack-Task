@@ -49,6 +49,7 @@ const UsersGrid = () => {
     { field: "email", headerName: "Email", width: 250 },
     { field: "phoneNumber", headerName: "Phone Number", width: 150 },
     { field: "city", headerName: "City", width: 200 },
+    { field: "role", headerName: "Role", width: 150 },
     {
       field: "actions",
       headerName: "Actions",

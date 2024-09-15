@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
-import { UserAttributes, UserCreationAttributes } from "../interfaces/user.interfaces";
+import { EUserRole, UserAttributes, UserCreationAttributes } from "../interfaces/user.interfaces";
 
 // class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
 // class User extends Model {
@@ -10,6 +10,7 @@ class User extends Model<UserAttributes, UserCreationAttributes> {
   declare phoneNumber: string;
   declare city: string;
   declare email: string;
+  declare role: EUserRole;
 
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -41,6 +42,10 @@ User.init(
       validate: {
         isEmail: true,
       },
+    },
+    role: {
+      type: DataTypes.ENUM,
+      values: [EUserRole.CLIENT, EUserRole.HELPER],
     },
   },
   {

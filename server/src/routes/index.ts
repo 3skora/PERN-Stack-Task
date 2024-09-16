@@ -1,4 +1,5 @@
 import userRoutes from "./user.routes";
+import matchRoutes from "./match.routes";
 
 import { Router } from "express";
 
@@ -7,6 +8,6 @@ export type TRoute = {
   router: Router;
 };
 
-const routes: TRoute[] = [userRoutes];
+const routes: TRoute[] = [userRoutes, matchRoutes];
 
 export default routes;

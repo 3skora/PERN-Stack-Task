@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import { port } from "./config";
 import sequelize from "./config/database";
-import User from "./models/user.model";
 import { TRoute } from "./routes";
 
 export const app = express();
@@ -16,19 +15,6 @@ export const testDatabase = async () => {
     console.error("Unable to connect to the database:", error);
   }
 };
-
-// export const seedDatabase = async () => {
-//   try {
-//     await User.create({
-//       name: "John Doe",
-//       phoneNumber: "123456789",
-//       city: "New York",
-//       email: "john.doe@example.com",
-//     });
-//   } catch (error) {
-//     console.log("🚀 ~ file: app.ts:27 ~ seedDatabase ~ error:", error);
-//   }
-// };
 
 export const syncDatabase = async () => {
   try {

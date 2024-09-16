@@ -1,3 +1,4 @@
+import MatchedUsers from "../../features/users/MatchedUsers";
 import UsersGrid from "../../features/users/UsersGrid";
 import { useAppDispatch } from "../../store";
 import { setFormEntity, setFormType, setOpenForm } from "../../store/formSlice";
@@ -24,6 +25,7 @@ const UsersPage = () => {
         </div>
       </div>
       <UsersGrid />
+      <MatchedUsers />
     </div>
   );
 };

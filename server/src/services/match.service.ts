@@ -1,6 +1,7 @@
 import { MatchCreationAttributes } from "../interfaces/match.interfaces";
 import User from "../models/user.model";
 import Match from "../models/match.model";
+import { EUserRole } from "../interfaces/user.interfaces";
 
 class MatchService {
   async getMatch(query: Partial<MatchCreationAttributes>) {
@@ -13,8 +14,8 @@ class MatchService {
 
   async createMatch(data: MatchCreationAttributes) {
     const { clientId, helperId } = data;
-    const client = await User.findOne({ where: { id: clientId, role: "CLIENT" } });
-    const helper = await User.findOne({ where: { id: helperId, role: "HELPER" } });
+    const client = await User.findOne({ where: { id: clientId, role: EUserRole.CLIENT } });
+    const helper = await User.findOne({ where: { id: helperId, role: EUserRole.HELPER } });
 
     if (!client) {
       throw new Error("Client not found");

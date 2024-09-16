@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { apiSlice } from "../store/apiSlice";
+import userReducer from "../store/userSlice";
 import formReducer from "../store/formSlice";
 import modalReducer from "../store/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +10,7 @@ import type { TypedUseSelectorHook } from "react-redux";
 
 // Combine reducers
 const rootReducer = combineReducers({
+  user: userReducer,
   form: formReducer,
   modal: modalReducer,
   [apiSlice.reducerPath]: apiSlice.reducer,

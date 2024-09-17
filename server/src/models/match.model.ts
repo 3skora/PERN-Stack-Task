@@ -20,7 +20,7 @@ Match.init(
       primaryKey: true,
     },
     clientId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       references: {
         model: User,
         key: "id",
@@ -28,7 +28,7 @@ Match.init(
       allowNull: false,
     },
     helperId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       references: {
         model: User,
         key: "id",

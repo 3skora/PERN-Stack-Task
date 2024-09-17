@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { port } from "./config";
+import { port, env } from "./config";
 import sequelize from "./config/database";
 import { TRoute } from "./routes";
 
@@ -18,7 +18,8 @@ export const testDatabase = async () => {
 
 export const syncDatabase = async () => {
   try {
-    await sequelize.sync();
+    env === "development" && (await sequelize.sync());
+    env === "test" && (await sequelize.sync({ force: true }));
     console.log("Database synchronized successfully.");
   } catch (error) {
     console.error("Unable to sync the database:", error);
@@ -39,6 +40,7 @@ export const initializeRoutes = (routes: TRoute[]) => {
 
 export const listen = () => {
   app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Server environment is  : ${env}`);
+    console.log(`Server is listening on port: ${port} `);
   });
 };

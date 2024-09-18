@@ -7,10 +7,10 @@ type TModalsLookUp = {
 };
 
 const ModalManager = () => {
-  const { modalName, onConfirmDeletion } = useAppSelector((state) => state.modal);
+  const { modalName } = useAppSelector((state) => state.modal);
 
   const modalsLookUp: TModalsLookUp = {
-    delete: <ConfirmDeletionModal onConfirm={onConfirmDeletion} />,
+    delete: <ConfirmDeletionModal />,
   };
 
   const selectedModal = modalsLookUp[modalName];

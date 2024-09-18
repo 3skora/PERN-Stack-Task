@@ -18,20 +18,14 @@ const UsersGrid = () => {
   const dispatch = useAppDispatch();
 
   const [deleteUser] = useDeleteUserMutation();
-  const { selectedUserId } = useAppSelector((state) => state.form);
   const { matchedHelper, matchedClient } = useAppSelector((state) => state.user);
-  console.log("🚀 ~ file: UsersGrid.tsx:24 ~ UsersGrid ~ matchedClient:", matchedClient);
-  console.log("🚀 ~ file: UsersGrid.tsx:24 ~ UsersGrid ~ matchedHelper:", matchedHelper);
 
-  const onConfirmDeletion = () => {
-    console.log("Confirm Delete");
-    console.log("🚀 ~ file: UsersGrid.tsx:28 ~ onConfirmDeletion ~ selectedUserId:", selectedUserId);
-    selectedUserId && deleteUser(selectedUserId);
+  const onConfirmDeletion = (id: number) => {
+    id && deleteUser(id);
     dispatch(setOpenModal(false));
   };
 
   const handleOnEditUser = (user: IUserRecord) => {
-    console.log("🚀 ~ file: UsersGrid.tsx:20 ~ handleOnEditUser ~ user:", user);
     const mappedUser = mapUserRecordToUser(user);
     dispatch(setOpenForm(true));
     dispatch(setSelectedUserId(user.id));
@@ -41,10 +35,9 @@ const UsersGrid = () => {
   };
 
   const handleOnDeleteUser = (user: IUserRecord) => {
-    console.log("🚀 ~ file: UsersGrid.tsx:25 ~ handleOnDeleteUser ~ user:", user);
-    dispatch(setSelectedUserId(user.id));
+    // dispatch(setSelectedUserId(user.id));
     dispatch(setOpenModal(true));
-    dispatch(setOnConfirmDeletion(onConfirmDeletion));
+    dispatch(setOnConfirmDeletion(() => onConfirmDeletion(user.id)));
   };
 
   const handleOnMatchUser = (user: IUserRecord) => {

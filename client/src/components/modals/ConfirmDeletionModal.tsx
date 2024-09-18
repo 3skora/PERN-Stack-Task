@@ -1,4 +1,3 @@
-import React from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,11 +8,7 @@ import { Box } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setOnConfirmDeletion, setOpenModal } from "../../store/modalSlice";
 
-interface ConfirmDeletionModalProps {
-  onConfirm: () => void;
-}
-
-const ConfirmDeletionModal: React.FC<ConfirmDeletionModalProps> = ({ onConfirm }) => {
+const ConfirmDeletionModal = () => {
   const dispatch = useAppDispatch();
   const { openModal, label, onConfirmDeletion } = useAppSelector((state) => state.modal);
 
@@ -29,7 +24,7 @@ const ConfirmDeletionModal: React.FC<ConfirmDeletionModalProps> = ({ onConfirm }
       </DialogContent>
       <DialogActions>
         <Box>
-          <Button variant="contained" sx={{ ml: 1 }} onClick={() => onConfirm()} color="primary">
+          <Button variant="contained" sx={{ ml: 1 }} onClick={() => onConfirmDeletion()} color="primary">
             Confirm
           </Button>
           <Button variant="contained" sx={{ ml: 1 }} onClick={onClose} color="error">

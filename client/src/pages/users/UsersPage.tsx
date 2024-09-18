@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import MatchedUsers from "../../features/users/MatchedUsers";
 import UsersGrid from "../../features/users/UsersGrid";
 import { useAppDispatch } from "../../store";
@@ -17,6 +18,11 @@ const UsersPage = () => {
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
+        <div>
+          <Button component={Link} to="/matches" variant="contained" color="primary">
+            View Matches
+          </Button>
+        </div>
         <h1 style={{ flexGrow: 1, textAlign: "center" }}>Users Management</h1>
         <div>
           <Button variant="contained" onClick={onCreateNewUser}>
@@ -24,8 +30,8 @@ const UsersPage = () => {
           </Button>
         </div>
       </div>
-      <UsersGrid />
       <MatchedUsers />
+      <UsersGrid />
     </div>
   );
 };

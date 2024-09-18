@@ -1,46 +1,28 @@
 import { DataGrid, GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 import { Button } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IUserRecord } from "../../interfaces/user.interfaces";
-import { useDeleteUserMutation } from "../../api/userApi";
 import Loader from "../../components/common/Loader";
 import { setOnConfirmDeletion, setOpenModal } from "../../store/modalSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { setFormEntity, setFormType, setOpenForm, setSelectedUserId, setUserInputs } from "../../store/formSlice";
-import { mapUserRecordToUser } from "../../utils/user.utils";
-import { useGetMatchQuery } from "../../api/matchApi";
+import { useAppDispatch } from "../../store";
+import { useDeleteMatchMutation, useGetMatchQuery } from "../../api/matchApi";
 
 const MatchesGrid = () => {
   const { data, isLoading } = useGetMatchQuery({});
 
   const dispatch = useAppDispatch();
 
-  const [deleteUser] = useDeleteUserMutation();
-  const { selectedUserId } = useAppSelector((state) => state.form);
+  const [deleteMatch] = useDeleteMatchMutation();
 
-  const onConfirmDeletion = () => {
-    console.log("Confirm Delete");
-    console.log("🚀 ~ file: MatchesGrid.tsx:28 ~ onConfirmDeletion ~ selectedUserId:", selectedUserId);
-    selectedUserId && deleteUser(selectedUserId);
+  const onConfirmDeletion = (id: number) => {
+    id && deleteMatch(id);
     dispatch(setOpenModal(false));
   };
 
-  const handleOnEditUser = (user: IUserRecord) => {
-    console.log("🚀 ~ file: MatchesGrid.tsx:20 ~ handleOnEditUser ~ user:", user);
-    const mappedUser = mapUserRecordToUser(user);
-    dispatch(setOpenForm(true));
-    dispatch(setSelectedUserId(user.id));
-    dispatch(setFormType("Edit"));
-    dispatch(setFormEntity("User"));
-    dispatch(setUserInputs(mappedUser));
-  };
-
-  const handleOnDeleteUser = (user: IUserRecord) => {
-    console.log("🚀 ~ file: MatchesGrid.tsx:25 ~ handleOnDeleteUser ~ user:", user);
-    dispatch(setSelectedUserId(user.id));
+  const handleOnDeleteMatch = (matchId: number) => {
+    console.log("🚀 ~ file: MatchesGrid.tsx:23 ~ handleOnDeleteMatch ~ matchId:", matchId);
     dispatch(setOpenModal(true));
-    dispatch(setOnConfirmDeletion(onConfirmDeletion));
+    dispatch(setOnConfirmDeletion(() => onConfirmDeletion(matchId)));
   };
 
   const columns: GridColDef[] = [
@@ -57,17 +39,11 @@ const MatchesGrid = () => {
       headerName: "Client Email",
       width: 180,
     },
-    // {
-    //   field: "client.phoneNumber",
-    //   headerName: "Client Phone Number",
-    //   width: 150,
-    // },
     { field: "client.city", headerName: "Client City", width: 170 },
 
     { field: "helper.id", headerName: "Helper ID", width: 100 },
     { field: "helper.name", headerName: "Helper Name", width: 170 },
     { field: "helper.email", headerName: "Helper Email", width: 180 },
-    // { field: "helper.phoneNumber", headerName: "Helper Phone Number", width: 150 },
     { field: "helper.city", headerName: "Helper City", width: 170 },
 
     {
@@ -81,7 +57,7 @@ const MatchesGrid = () => {
             variant="contained"
             color="error"
             startIcon={<DeleteIcon />}
-            onClick={() => handleOnDeleteUser(params.row)}
+            onClick={() => handleOnDeleteMatch(params.row.id)}
           >
             Unmatch
           </Button>

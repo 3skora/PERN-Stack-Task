@@ -1,9 +1,9 @@
 import { apiSlice } from "../store/apiSlice";
-import { IMatch, IMatchRecord } from "../interfaces/match.interfaces";
+import { IMatch, IMatchPopulatedRecord, IMatchRecord } from "../interfaces/match.interfaces";
 
 const matchApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getMatch: builder.query<IMatchRecord[], Partial<IMatchRecord>>({
+    getMatch: builder.query<IMatchPopulatedRecord[], Partial<IMatchRecord>>({
       query: (params) => ({
         url: "match",
         params,

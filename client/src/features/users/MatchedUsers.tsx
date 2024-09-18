@@ -1,15 +1,26 @@
 import { useCreateMatchMutation } from "../../api/matchApi";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { Button } from "@mui/material";
+import { setMatchedClient, setMatchedHelper } from "../../store/userSlice";
+import { useEffect } from "react";
 
 const MatchedUsers = () => {
-  const [createMatch] = useCreateMatchMutation();
+  const dispatch = useAppDispatch();
+
+  const [createMatch, { isSuccess }] = useCreateMatchMutation();
   const { matchedHelper, matchedClient } = useAppSelector((state) => state.user);
 
   const onApplyMatch = () => {
     if (matchedHelper && matchedClient) createMatch({ clientId: matchedClient.id, helperId: matchedHelper.id });
     console.log("Apply Match");
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setMatchedHelper(undefined));
+      dispatch(setMatchedClient(undefined));
+    }
+  }, [isSuccess]);
 
   if (!matchedHelper && !matchedClient) return null;
 

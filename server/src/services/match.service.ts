@@ -5,7 +5,24 @@ import { EUserRole } from "../interfaces/user.interfaces";
 
 class MatchService {
   async getMatch(query: Partial<MatchCreationAttributes>) {
-    return await Match.findAll({ where: query });
+    return await Match.findAll({
+      where: query,
+      include: [
+        {
+          model: User,
+          as: "client",
+          attributes: ["id", "name", "phoneNumber", "city", "email", "role"],
+        },
+        {
+          model: User,
+          as: "helper",
+          attributes: ["id", "name", "phoneNumber", "city", "email", "role"],
+        },
+      ],
+      attributes: {
+        exclude: ["clientId", "helperId"],
+      },
+    });
   }
 
   async getMatchById(id: number) {

@@ -42,4 +42,7 @@ Match.init(
   }
 );
 
+Match.belongsTo(User, { as: "client", foreignKey: "clientId" });
+Match.belongsTo(User, { as: "helper", foreignKey: "helperId" });
+
 export default Match;
